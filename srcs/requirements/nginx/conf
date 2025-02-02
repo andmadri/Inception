@@ -1,0 +1,7 @@
+server {
+
+	ssl_certificate /etc/nginx/ssl/nginx-certificate.crt
+	ssl_certificate_key /etc/nginx/ssl/nginx-private.key
+
+	ssl_protocols 
+}
