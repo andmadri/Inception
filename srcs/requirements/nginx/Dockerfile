@@ -1,5 +1,7 @@
 FROM debian:bullseye
 
+ENV DEBIAN_FRONTED=noninteractive
+
 RUN apt update -y \
     && apt install -y nginx \
     && apt install -y openssl \
