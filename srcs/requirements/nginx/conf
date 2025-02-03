@@ -1,7 +1,17 @@
 server {
+	listen 443 ssl;
+	listen [::]:443 ssl;
+	server_name andmadri.42.fr www.andmadri.42.fr
+	ssl_certificate /etc/nginx/ssl/andmadri.42.fr.crt;
+	ssl_certificate_key /etc/nginx/ssl/andmadri.42.fr.key;
+	ssl_protocols TLSv1.2;
+	root /var/www/html;
+	index index.php;
+	location / {
+		try_files $uri =404; //I want to have an error page
+		//should we only handle php files?
+		//what about static files too?
+		//still need stuff from fast_cgi
 
-	ssl_certificate /etc/nginx/ssl/nginx-certificate.crt
-	ssl_certificate_key /etc/nginx/ssl/nginx-private.key
-
-	ssl_protocols 
+	}
 }

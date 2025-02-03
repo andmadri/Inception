@@ -1,1 +1,2 @@
-//has to build the Docker images using docker-compose.yml
+up:
+	docker-compose up --build

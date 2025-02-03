@@ -6,16 +6,14 @@ RUN apt update -y \
     && apt clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:1024 -keyout:/etc/nginx/ssl/nginx-private.key \
-    -out /etc/nginx/ssl/nginx-certificate.crt
-#apt clean removes the installer files wich are downloaded to install the packages
-#rm -rf /var/lib/apt/lists/* removes the catalogue of packages available
+RUN mkdir -p /etc/nginx/ssl
 
-WORKDIR /srcs/requirements/nginx
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
+    -keyout /etc/nginx/ssl/andmadri.42.fr.key \
+    -out /etc/nginx/ssl/andmadri.42.fr.crt \
+    -subj "/C=FR/ST=Île-de-France/L=Paris/0=42/OU=Student/CN=andmadri.42.fr"
 
-COPY conf /etc/nginx/conf
-
-#Generate a self-signed SSL Certificate
+COPY conf /etc/nginx/conf.d/
 
 EXPOSE 443
 

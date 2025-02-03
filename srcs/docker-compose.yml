@@ -1,3 +1,7 @@
 services:
-  web:
-    image:
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    ports:
+      - "443:443"
