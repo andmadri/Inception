@@ -3,7 +3,7 @@ FROM debian:bullseye
 ENV DEBIAN_FRONTED=noninteractive
 
 RUN apt update -y && apt install -y \
-		php-fpm \
+		php8.1-fpm \
 		php-mysql \
 		php-zip \
 		unzip \

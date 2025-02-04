@@ -10,23 +10,15 @@ server {
 	ssl_protocols TLSv1.2;
 
 	root /var/www/html;
-	index index.php;
-
 
 	location / {
-		try_files $uri =404; 
-		include fastcgi_params;
-		fastcgi_pass 
-		fastcgi_index
-		fastcgi_param
-		
-		
-		
+		try_files $uri /index.php?$args;
+	}
+
+	location ~ \.php$ {
+		fastcgi_pass wordpress:9000;
+		include /etc/nginx/fastcgi_params
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 
 	}
 }
-
-		//I want to have an error page
-		//should we only handle php files?
-		//what about static files too?
-		//still need stuff from fast_cgi
