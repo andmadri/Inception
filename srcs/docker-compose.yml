@@ -3,16 +3,22 @@ services:
     build:
       context: ./requirements/nginx
       dockerfile: Dockerfile
+    container_name: nginx
+    depends_on:
+      - wordpress
     ports:
       - "443:443"
+    restart: always
 
   wordpress:
     build:
     image:
     restart: always
-    ports:
-      - ""
     environment:
       - name=value
+    depedends_on:
+      - mariadb
 
-
+network:
+  inception:
+    driver: brigde
