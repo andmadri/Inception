@@ -4,21 +4,38 @@ services:
       context: ./requirements/nginx
       dockerfile: Dockerfile
     container_name: nginx
+    restart: always
+    volumes:
+      - /home/andmadri/data/wp:/var/www/html:ro
     depends_on:
       - wordpress
     ports:
       - "443:443"
-    restart: always
 
   wordpress:
     build:
-    image:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    container_name: wordpress
     restart: always
+    volumes:
+      - /home/andmadri/data/wp:/var/www/html:rw
+    depends_on:
+      - mariadb
     environment:
       - name=value
-    depedends_on:
-      - mariadb
 
-network:
+  mariadb:
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    container_name: mariadb
+    restart: always
+    volumes:
+      - home/andmadri/data/db:/var/lib/mysql
+    environment:
+      - name=value
+
+networks:
   inception:
     driver: brigde
