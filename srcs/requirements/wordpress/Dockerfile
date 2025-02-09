@@ -19,4 +19,6 @@ RUN unzip latest.zip -d /var/www/ \
 		&& mv /var/www/wordpress/* /var/www/html \
 		&& rm -rf /var/www/wordpress latest.zip
 
+EXPOSE 9000
+
 CMD [ "executable" ]

@@ -15,8 +15,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
     -out /etc/nginx/ssl/andmadri.42.fr.crt \
     -subj "/C=FR/ST=Île-de-France/L=Paris/0=42/OU=Student/CN=andmadri.42.fr"
 
-COPY conf /etc/nginx/conf.d/
-
 EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]

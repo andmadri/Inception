@@ -7,10 +7,13 @@ services:
     restart: always
     volumes:
       - /home/andmadri/data/wp:/var/www/html:ro
+      - ./requirements/nginx/conf:/etc/nginx/conf.d/
     depends_on:
       - wordpress
     ports:
       - "443:443"
+    networks:
+      - inception
 
   wordpress:
     build:
@@ -22,8 +25,10 @@ services:
       - /home/andmadri/data/wp:/var/www/html:rw
     depends_on:
       - mariadb
-    environment:
-      - name=value
+    env_file:
+      - .env
+    networks:
+      - inception
 
   mariadb:
     build:
@@ -32,10 +37,12 @@ services:
     container_name: mariadb
     restart: always
     volumes:
-      - home/andmadri/data/db:/var/lib/mysql
-    environment:
-      - name=value
+      - /home/andmadri/data/db:/var/lib/mysql
+    env_file:
+      - .env
+    networks:
+      - inception
 
 networks:
   inception:
-    driver: brigde
+    driver: bridge
