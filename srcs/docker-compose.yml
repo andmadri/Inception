@@ -24,7 +24,8 @@ services:
     volumes:
       - /home/andmadri/data/wp:/var/www/html:rw
     depends_on:
-      - mariadb
+      mariadb:
+        condition: service_healthy
     env_file:
       - .env
     networks:
@@ -40,6 +41,17 @@ services:
       - /home/andmadri/data/db:/var/lib/mysql
     env_file:
       - .env
+    environment:
+      - MYSQL_DATABASE=${DB_NAME}
+      - MYSQL_USER=${DB_USR}
+      - MYSQL_PASSWORD=${DB_USR_PWD}
+      - MYSQL_ROOT_PASSWORD=${DB_USR_PWD}
+      - MYSQL_PORT=${DB_PORT}
+    healthcheck:
+      test: [ "executable", "arg" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
     networks:
       - inception
 
