@@ -12,13 +12,11 @@ RUN apt update -y && apt install -y \
 		&& rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /var/www/html
-
 RUN curl -LO https://wordpress.org/latest.zip
-
 RUN unzip latest.zip -d /var/www/ \
 		&& mv /var/www/wordpress/* /var/www/html \
 		&& rm -rf /var/www/wordpress latest.zip
 
 EXPOSE 9000
 
-CMD [ "executable" ]
+CMD [ "php-fpm8.1", "-F"]

@@ -12,12 +12,12 @@ server {
 	root /var/www/html;
 
 	location / {
-		try_files $uri /index.php?$args;
+		try_files $uri $uri/ /index.php?$args;
 	}
 
 	location ~ \.php$ {
-		fastcgi_pass wordpress:9000;
 		include /etc/nginx/fastcgi_params
+		fastcgi_pass wordpress:9000;
 		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
 
 	}
