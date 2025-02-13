@@ -19,6 +19,10 @@ RUN unzip latest.zip -d /var/www/ \
 COPY wp_script.sh /wp_script.sh
 RUN chmod +x /wp_script.sh
 
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+		&& chmod +x wp-cli.phar \
+		&& mv wp-cli.phar /usr/local/bin/wp
+
 EXPOSE 9000
 
 ENTRYPOINT [ "/wp_script.sh" ]

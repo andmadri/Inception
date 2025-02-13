@@ -48,7 +48,7 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_USR_PWD}
       - MYSQL_PORT=${DB_PORT}
     healthcheck:
-      test: [ "executable", "arg" ]
+      test: [ "", "" ]
       interval: 15s
       timeout: 5s
       retries: 5

@@ -17,6 +17,6 @@ RUN openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
 
 EXPOSE 443
 
-ENTRYPOINT [ "/usr/sbin/nginx" ]
+ENTRYPOINT ["/usr/sbin/nginx"]
 
-CMD ["-g", "daemon off"]
+CMD ["-g", "daemon off;"]
