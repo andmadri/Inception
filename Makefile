@@ -1,13 +1,9 @@
-COMPOSE=docker-compose
-PROJECT_NAME=inception
+COMPOSE=./src/docker-compose.yml
 
-build:
-	$(COMPOSE) build
-
-up: build
-	$(COMPOSE) up -d
+up:
+	docker-compose -f $(COMPOSE) up --build
 
 down:
-	$(COMPOSE) down --remove-orphans
+	docker-compose -f $(COMPOSE) down --remove-orphans
 
-.PHONY up build down
+.PHONY up down
