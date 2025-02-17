@@ -3,15 +3,17 @@
 WP_PATH = "/var/www/html"
 WP_CONFIG_PATH="$WP_PATH/wp-config.php"
 
-#check if MariaDB is working properly here or in the healthcheckup
-echo "MariaDB is up."
-
 if [ ! -f "$WP_CONFIG_PATH" ]; then
 	echo "Creating wp-config.php..."
 	wp config create --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost"$DB_HOST":"$DB_PORT" --allow-root
 fi
 
+#when I use wget wordpress.com... I am only installing the files
+#therefore I use core install to create a database
+#configure the site title and so on
 #if this is false it means that wordpress files exist but the database tables are not created yet
+#WP-CLI discourages running commands as root therefore cause the container is root
+#We use --allow-root to run it
 if [ ! wp core is-installed --allow-root ]; then
 	echo "Installing WordPres..."
 	wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USR" --admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL"

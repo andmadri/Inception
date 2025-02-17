@@ -16,8 +16,8 @@ RUN unzip latest.zip -d /var/www/ \
 		&& mv /var/www/wordpress/* /var/www/html/ \
 		&& rm -rf /var/www/wordpress latest.zip
 
-COPY wp_script.sh /wp_script.sh
-RUN chmod +x /wp_script.sh
+COPY wp_script.sh /usr/local/bin/wp_script.sh
+RUN chmod +x /usr/local/bin/wp_script.sh
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 		&& chmod +x wp-cli.phar \
@@ -25,6 +25,6 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 EXPOSE 9000
 
-ENTRYPOINT [ "/wp_script.sh" ]
+ENTRYPOINT [ "wp_script.sh" ]
 
 CMD [ "php8.1-fpm", "-F" ]
