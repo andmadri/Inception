@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [! 'find /var/lib/mysql -name $DATABASE_NAME' ]; then
+if [ ! 'find /var/lib/mysql -name $DATABASE_NAME' ]; then
     service mariadb start
     echo "Databse $DB_NAME does not exist, creating it..."
 

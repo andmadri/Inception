@@ -3,7 +3,7 @@ FROM debian:bullseye
 ENV DEBIAN_FRONTED=noninteractive
 
 RUN apt update -y && apt install -y \
-		php8.1-fpm \
+		php-fpm \
 		php-mysql \
 		php-zip \
 		unzip \
@@ -27,4 +27,4 @@ EXPOSE 9000
 
 ENTRYPOINT [ "wp_script.sh" ]
 
-CMD [ "php8.1-fpm", "-F" ]
+CMD [ "php-fpm8.1", "-F" ]

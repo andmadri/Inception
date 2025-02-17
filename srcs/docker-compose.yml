@@ -22,10 +22,9 @@ services:
     container_name: wordpress
     restart: always
     volumes:
-      - /home/andmadri/data/wp:/var/www/html:rw
+      - /srcs/data/wp:/var/www/html:rw
     depends_on:
-      mariadb:
-        condition: service_healthy
+      - mariadb
     env_file:
       - .env
     networks:
@@ -38,7 +37,7 @@ services:
     container_name: mariadb
     restart: always
     volumes:
-      - /home/andmadri/data/db:/var/lib/mysql
+      - /srcs/data/db:/var/lib/mysql
     env_file:
       - .env
     healthcheck:
