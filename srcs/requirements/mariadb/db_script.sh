@@ -1,13 +1,18 @@
 #!/bin/bash
 
-if ! mariadb -u root -p"$DB_USR_PWD" -e "USE $DB_NAME;" > /dev/null 2 >&1; then
+if [! 'find /var/lib/mysql -name $DATABASE_NAME' ]; then
+    service mariadb start
     echo "Databse $DB_NAME does not exist, creating it..."
 
-    echo "CREATE DATABASE IF NOT EXISTS $DB_NAME ;"
-    echo "CREATE USER IF NOT EXISTS '$DB_USR'@'%' IDENTIFIED BY '$DB_USR_PWD' ;"
-    echo "GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USR'@'%' IDENTIFIED BY '$DB_USR_PWD' ;"
-fi
+    mysql << EOF
+    CREATE DATABASE IF NOT EXISTS $DB_NAME ;
+    CREATE USER IF NOT EXISTS '$DB_USR'@'%' IDENTIFIED BY '$DB_USR_PWD' ;
+    GRANT ALL PRIVILEGES ON $DB_NAME.* TO '$DB_USR'@'%' IDENTIFIED BY '$DB_USR_PWD' ;
+EOF
 
-#why do I need to change 127.0.0.1 to 0.0.0.0?
+    service mariadb stop
+else
+    echo "Database $DB_NAME already exists..."
+fi
 
 exec "$@"
