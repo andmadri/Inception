@@ -10,7 +10,7 @@ RUN apt update -y \
 
 RUN mkdir -p /etc/nginx/ssl
 
-RUN openssl req -x509 -nodes -days 365 -newkey rsa:1024 \
+RUN openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/nginx/ssl/andmadri.42.fr.key \
     -out /etc/nginx/ssl/andmadri.42.fr.crt \
     -subj "/C=FR/ST=Île-de-France/L=Paris/0=42/OU=Student/CN=andmadri.42.fr"

@@ -53,19 +53,19 @@ services:
     networks:
       - inception
     
-  volumes:
-    wp-volume:
-      driver: local
-      driver_opts:
-        o: bind
-        type: none
-        device: /home/${USER}/data/wp
-    db-volume:
-      driver: local
-      driver_opts:
-        o: bind
-        type: none
-        device: /home/${USER}/data/db
+volumes:
+  wp-volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/wp
+  db-volume:
+    driver: local
+    driver_opts:
+      o: bind
+      type: none
+      device: /home/${USER}/data/db
 
 
 networks:

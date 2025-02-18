@@ -27,4 +27,4 @@ EXPOSE 9000
 
 ENTRYPOINT [ "wp_script.sh" ]
 
-CMD [ "php-fpm8.1", "-F" ]
+CMD [ "php-fpm", "-F" ]
