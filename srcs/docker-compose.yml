@@ -6,7 +6,7 @@ services:
     container_name: nginx
     restart: always
     volumes:
-      - /home/andmadri/data/wp:/var/www/html:ro
+      - wp-volume:/var/www/html:ro
       - ./requirements/nginx/conf:/etc/nginx/conf.d/
     depends_on:
       - wordpress
@@ -22,9 +22,11 @@ services:
     container_name: wordpress
     restart: always
     volumes:
-      - /srcs/data/wp:/var/www/html:rw
+      - wp-volume:/var/www/html:rw
     depends_on:
       - mariadb
+    ports:
+      - "9000"
     env_file:
       - .env
     networks:
@@ -37,7 +39,9 @@ services:
     container_name: mariadb
     restart: always
     volumes:
-      - /srcs/data/db:/var/lib/mysql
+      - db-volume:/var/lib/mysql
+    ports:
+      - "3306"
     env_file:
       - .env
     healthcheck:
@@ -48,6 +52,21 @@ services:
       retries: 5
     networks:
       - inception
+    
+  volumes:
+    wp-volume:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/${USER}/data/wp
+    db-volume:
+      driver: local
+      driver_opts:
+        o: bind
+        type: none
+        device: /home/${USER}/data/db
+
 
 networks:
   inception:
