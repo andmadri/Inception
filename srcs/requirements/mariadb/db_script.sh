@@ -23,6 +23,6 @@ chmod -R 755 /var/lib/mysql
 
 mkdir -p /var/run/mysqld
 chown -R mysql:mysql /var/run/mysqld
-chmod -R 755 /var/run/mysld
+chmod -R 755 /var/run/mysqld
 
 exec "$@"

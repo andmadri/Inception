@@ -14,7 +14,9 @@ RUN apt update -y && apt install -y \
 
 RUN mkdir -p /var/www/html
 
+COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY wp_script.sh /usr/local/bin/wp_script.sh
+
 RUN chmod +x /usr/local/bin/wp_script.sh
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
@@ -25,4 +27,4 @@ EXPOSE 9000
 
 ENTRYPOINT [ "wp_script.sh" ]
 
-CMD [ "php-fpm", "-F" ]
+CMD [ "php7.4-fpm", "-F" ]
