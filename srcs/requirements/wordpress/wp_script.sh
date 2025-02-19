@@ -1,11 +1,16 @@
 #!/bin/bash
 
-if [ ! -f "/var/www/html/wp-config.php" ]; then
+if [ ! -f "/var/www/html/wp-load.php" ]; then
 	echo "Downloading Wordpress..."
 	wp core download --path="/var/www/html/" --allow-root
 	echo "Wordpress is Downloaded..."
+else
+	echo "Wordpress is already installed..."
+fi
+
+if [ ! -f "/var/www/html/wp-config.php" ]; then
 	echo "Creating wp-config.php..."
-	wp config create --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
+	wp config create --path="/var/www/html/" --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
 fi
 
 #when I use wget wordpress.com... I am only installing the files
@@ -16,11 +21,7 @@ fi
 #We use --allow-root to run it
 if ! wp core is-installed --allow-root; then
 	echo "Installing WordPress..."
-	wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USR" --admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL"
-fi
-
-if ! php -v; then
-	echo "php is not installed properly..."
+	wp core install --path="/var/www/html/" --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USR" --admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL" --allow-root
 fi
 
 #if the user exists it will print to stdout, therefore it has to go to /dev/nul;
