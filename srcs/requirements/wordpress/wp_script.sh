@@ -1,7 +1,9 @@
 #!/bin/bash
 
 if [ ! -f "/var/www/html/wp-config.php" ]; then
+	echo "Downloading Wordpress..."
 	wp core download --path="/var/www/html/" --allow-root
+	echo "Wordpress is Downloaded..."
 	echo "Creating wp-config.php..."
 	wp config create --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
 fi
@@ -13,7 +15,7 @@ fi
 #WP-CLI discourages running commands as root therefore cause the container is root
 #We use --allow-root to run it
 if ! wp core is-installed --allow-root; then
-	echo "Installing WordPres..."
+	echo "Installing WordPress..."
 	wp core install --url="$DOMAIN_NAME" --title="$WP_TITLE" --admin_user="$WP_ADMIN_USR" --admin_password="$WP_ADMIN_PWD" --admin_email="$WP_ADMIN_EMAIL"
 fi
 

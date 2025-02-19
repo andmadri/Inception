@@ -11,10 +11,7 @@ RUN apt update -y && apt install -y \
 		&& apt clean \
 		&& rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/www/html && curl -LO https://wordpress.org/latest.zip
-RUN unzip latest.zip -d /var/www/ \
-		&& mv /var/www/wordpress/* /var/www/html/ \
-		&& rm -rf /var/www/wordpress latest.zip
+RUN mkdir -p /var/www/html
 
 COPY wp_script.sh /usr/local/bin/wp_script.sh
 RUN chmod +x /usr/local/bin/wp_script.sh
