@@ -1,15 +1,5 @@
 #!/bin/bash
 
-wait_for_maridab() {
-    while ! nc -z mariadb $DB_PORT; does
-        echo "Waiting for MariaDB to be ready..."
-        sleep 5
-    done
-    echo "MariaDB is ready!"
-}
-
-wait_for_maridab
-
 if [ ! 'find /var/lib/mysql -name $DATABASE_NAME' ]; then
     service mariadb start
     echo "Databse $DB_NAME does not exist, creating it..."

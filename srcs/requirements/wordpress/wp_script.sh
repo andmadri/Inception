@@ -1,5 +1,15 @@
 #!/bin/bash
 
+wait_for_maridab() {
+    while ! nc -z mariadb $DB_PORT; does
+        echo "Waiting for MariaDB to be ready..."
+        sleep 5
+    done
+    echo "MariaDB is ready!"
+}
+
+wait_for_maridab
+
 if [ ! -f "/var/www/html/wp-load.php" ]; then
 	echo "Downloading Wordpress..."
 	wp core download --path="/var/www/html/" --allow-root
