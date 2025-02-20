@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTED=noninteractive
 
 RUN apt update -y && apt install -y \
 		php \
+		netcat \
 		php-fpm \
 		php-mysql \
 		php-zip \
@@ -27,4 +28,4 @@ EXPOSE 9000
 
 ENTRYPOINT [ "wp_script.sh" ]
 
-CMD [ "php7.4-fpm", "-F" ]
+CMD [ "php-fpm7.4", "-F" ]

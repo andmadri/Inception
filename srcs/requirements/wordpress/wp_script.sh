@@ -1,14 +1,14 @@
 #!/bin/bash
 
-wait_for_maridab() {
-    while ! nc -z mariadb $DB_PORT; does
+wait_for_mariadb() {
+    while ! nc -z mariadb $DB_PORT; do
         echo "Waiting for MariaDB to be ready..."
         sleep 5
     done
     echo "MariaDB is ready!"
 }
 
-wait_for_maridab
+wait_for_mariadb
 
 if [ ! -f "/var/www/html/wp-load.php" ]; then
 	echo "Downloading Wordpress..."
@@ -18,11 +18,9 @@ else
 	echo "Wordpress is already downloaded..."
 fi
 
-if [ ! -f "/var/www/html/wp-config.php" ]; then
-	echo "Creating wp-config.php..."
-	wp config create --path="/var/www/html/" --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
-	echo "Created wp-config.php..."
-fi
+echo "Creating wp-config.php..."
+wp config create --path="/var/www/html/" --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST":"$DB_PORT" --allow-root
+echo "Created wp-config.php..."
 
 if ! wp core is-installed --path="/var/www/html/" --allow-root; then
 	echo "Installing Wordpress..."
