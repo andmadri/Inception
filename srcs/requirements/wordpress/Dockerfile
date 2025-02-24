@@ -5,6 +5,7 @@ ENV DEBIAN_FRONTED=noninteractive
 RUN apt update -y && apt install -y \
 		php \
 		netcat \
+		msmtp-mta \
 		php-fpm \
 		php-mysql \
 		php-zip \
@@ -13,7 +14,11 @@ RUN apt update -y && apt install -y \
 		&& apt clean \
 		&& rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /var/www/html
+RUN mkdir -p /var/www/html && mkdir -p /run/php
+# RUN chown -R www-data:www-data /run/php \
+# 	&& chmod -R 755 /run/php
+RUN chown -R www-data:www-data /var/www/html \
+	&& chmod -R 755 /var/www/html
 
 COPY ./conf/www.conf /etc/php/7.4/fpm/pool.d/www.conf
 COPY wp_script.sh /usr/local/bin/wp_script.sh
@@ -22,7 +27,7 @@ RUN chmod +x /usr/local/bin/wp_script.sh
 
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 		&& chmod +x wp-cli.phar \
-		&& mv wp-cli.phar /usr/local/bin/wp
+		&& mv wp-cli.phar /usr/local/bin/wp-cli.phar
 
 EXPOSE 9000
 

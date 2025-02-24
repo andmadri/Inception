@@ -25,8 +25,6 @@ services:
       - wp-volume:/var/www/html:rw
     depends_on:
       - mariadb
-    ports:
-      - "9000"
     env_file:
       - .env
     networks:
@@ -40,16 +38,8 @@ services:
     restart: always
     volumes:
       - db-volume:/var/lib/mysql
-    ports:
-      - "3306"
     env_file:
       - .env
-    # healthcheck:
-    #   test: [ "CMD", "bash", "-c", "mysqladmin ping -hmariadb -u${DB_USR} -p${DB_USR_PWD} 
-    #           && mysql -hmariadb -u${DB_USR} -p${DB_USR_PWD} -e 'SHOW DATABASES;' | grep ${DB_NAME}"]
-    #   interval: 15s
-    #   timeout: 5s
-    #   retries: 5
     networks:
       - inception
     
