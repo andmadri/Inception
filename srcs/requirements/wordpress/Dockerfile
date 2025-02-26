@@ -6,6 +6,7 @@ RUN apt update -y && apt install -y \
 		php \
 		netcat \
 		msmtp-mta \
+		mariadb-client \
 		php-fpm \
 		php-mysql \
 		php-zip \

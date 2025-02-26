@@ -1,7 +1,7 @@
 #!/bin/bash
 
 wait_for_mariadb() {
-    while ! nc -z mariadb $DB_PORT; do
+    while ! mysql -h"$DB_HOST" -P"$DB_PORT" -u"$DB_USR" -p"$DB_USR_PWD" -e "SELECT 1" 2>/dev/null; do
         echo "Waiting for MariaDB to be ready..."
         sleep 5
     done
@@ -15,7 +15,7 @@ if [ ! -f "/var/www/html/wp-load.php" ]; then
 	wp-cli.phar core download --path="/var/www/html/" --allow-root
 	echo "Wordpress is Downloaded..."
 	echo "Creating wp-config.php..."
-	wp-cli.phar config create --path="/var/www/html/" --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST" --allow-root
+	wp-cli.phar config create --path="/var/www/html/" --dbname="$DB_NAME" --dbuser="$DB_USR" --dbpass="$DB_USR_PWD" --dbhost="$DB_HOST" --dbcharset="utf8" --dbcollate="utf8_general_ci" --allow-root
 else
 	echo "Wordpress is already downloaded..."
 fi
@@ -29,6 +29,9 @@ if ! wp-cli.phar user get "$WP_USR" --path="/var/www/html/" --allow-root > /dev/
 	echo "Creating $WP_USR user ..."
 	wp-cli.phar user create "$WP_USR" "$WP_USR_EMAIL" --path="/var/www/html/" --user_pass="$WP_USR_PWD" --allow-root
 fi
+
+echo "Installing Inspiro theme..."
+wp-cli.phar theme install inspiro --activate --path="/var/www/html/" --allow-root
 
 echo "Executing WordPress..."
 exec "$@"
